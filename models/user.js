@@ -25,6 +25,10 @@ const userSchema = new Schema(
         type: Date,
         default: Date.now,
       },
+      friends:[{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }],
     },
     {
       toJSON: {
@@ -35,7 +39,9 @@ const userSchema = new Schema(
   );
 
   userSchema.virtual('friendCount').get(function() {
-    return this.reactions.length;
+    return this.friends.length;
   })
+
+  const User = model('user', userSchema);
   
-  module.exports = reactionSchema;
+  module.exports = User;
